@@ -20,6 +20,13 @@ export default function Card(props: CardInfoProps) {
     setPassword(password);
   };
 
+  const handleFormData = () => {
+    return {
+      email,
+      password
+    }
+  }
+
   return (
     <div className="flex flex-col items-start gap-5 w-full sm:w-[90%] md:w-[80%] lg:w-[100%] mx-auto shadow shadow-slate-400 p-10 rounded-lg">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -44,7 +51,7 @@ export default function Card(props: CardInfoProps) {
           type="password"
           data={password}
         />
-        <Button text="Login" icon={<IconArrowNarrowRight />} />
+        <Button text="Login" icon={<IconArrowNarrowRight />} onClick={handleFormData}/>
       </form>
     </div>
   );
