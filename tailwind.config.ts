@@ -15,7 +15,8 @@ const config: Config = {
       },
       colors: {
         'input-color' : "#FFF6F4",
-        'button-color' : "#F47458"
+        'button-color' : "#F47458",
+        'background-inital' : "#FFEDE1"
       }
     },
   },

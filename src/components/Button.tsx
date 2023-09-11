@@ -1,5 +1,3 @@
-
-
 interface ButtonProps {
     text: string;
     icon: React.ReactNode;
