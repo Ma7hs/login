@@ -1,19 +1,14 @@
+"use client"
+
 import CardForm from "@/components/Card";
 import { useState } from 'react';
+import Input from "./CustomInput";
 
 export default function ForgotPassword() {
 
     const [email, setEmail] = useState<string>("")
-
-    const field = [
-        {
-            type: "email",
-            text: "Email",
-        }
-    ]
-
-    //Criar função para enviar ao Backend a solicitacao para redefninr email
-    const handleSubmitEmail = () => {
+    
+    const handleSubmitEmail = (email: string) => {
         console.log(email)
         setEmail(email)
     }
@@ -22,21 +17,19 @@ export default function ForgotPassword() {
 
     }
 
-    const data = {
-        email
-    }
-
     return (
         <div className="container bg-white">
             <CardForm 
-            title="Redefinir Senha"
+                title="Redefinir Senha"
                 subtitle="Esqueceu sua senha?"
-                fields={field}
                 buttonText="Enviar"
-                onClick={sendEmail} 
+                onClick={sendEmail}> 
+                <Input  
+                data={email}
+                type="email"
                 onChange={handleSubmitEmail}
-                data={data.email}
-                />
+                text="Email"/>
+            </CardForm>       
         </div>
     )
 }

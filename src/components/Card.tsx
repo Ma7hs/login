@@ -1,28 +1,20 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import Input from './CustomInput';
 import Button from './Button';
 import { IconArrowNarrowRight } from '@tabler/icons-react';
 import Image from '../../node_modules/next/image';
 import logo from '../../public/logo.png';
+import { data } from '../../node_modules/autoprefixer/lib/autoprefixer';
 
 interface CardFormProps {
   title: string;
   subtitle: string;
-  fields: {
-    type: string;
-    text: string;
-  }[];
   buttonText: string;
   onClick: () => void;
-  onChangeEmail: (email: string) => void;
-  onChangePassword: (password: string) => void;
-  data: {
-    email: string;
-    password: string;
-  };
+  children: React.ReactNode;
 }
 
-export default function CardForm(props: CardFormProps) {
+export default function CardForm({title, subtitle, children, onClick, buttonText}: CardFormProps) {
   return (
     <div className="flex flex-col items-start gap-7 w-72 sm:w-[90%] md:w-[80%] lg:w-[120%] mx-auto shadow shadow-slate-400 p-10 rounded-lg bg-white">
       <div className="flex items-center justify-center sm:mx-auto sm:w-full sm:max-w-sm">
@@ -30,20 +22,20 @@ export default function CardForm(props: CardFormProps) {
       </div>
       <div className="gap-5">
         <span className="text-sm text-zinc-400 font-normal">
-          {props.subtitle}
+          {subtitle}
         </span>
-        <h1 className="text-5xl text-black font-semibold">{props.title}</h1>
+        <h1 className="text-5xl text-black font-semibold">{title}</h1>
       </div>
       <form className="flex flex-col items-center justify-center gap-7 w-full">
-        {props.fields.map((field, index) => {
-          if (field.type === 'email') {
+        {/* {props.fields.map((field, index) => {
+          if (field.type === 'email' || field.type === 'text') {
             return (
               <Input
                 key={index}
                 text={field.text}
                 type="email"
-                data={props.data.email}
-                onChange={props.onChangeEmail}
+                data={props.data.email || " "}
+                onChange={(value) => props.onChangeEmail && props.onChangeEmail(value)}
               />
             );
           } else if (field.type === 'password') {
@@ -52,17 +44,18 @@ export default function CardForm(props: CardFormProps) {
                 key={index}
                 text={field.text}
                 type="password"
-                data={props.data.password}
-                onChange={props.onChangePassword} 
-                forgotPassoword
+                data={props.data.password || ""}
+                onChange={(value) => props.onChangePassword && props.onChangePassword(value)}
+                forgotPassoword={props.forgotPassowrd === true}
               />
             );
           }
-        })}
+        })} */}
+        {children}
         <Button
-          text={props.buttonText}
+          text={buttonText}
           icon={<IconArrowNarrowRight />}
-          onClick={props.onClick}
+          onClick={onClick}
         />
       </form>
     </div>

@@ -2,6 +2,7 @@ import CardForm from './Card';
 import mypic from "../../public/group-image.png"
 import Image from '../../node_modules/next/image';
 import { useEffect, useState } from 'react';
+import Input from './CustomInput';
 
 
 export default function Login() {
@@ -11,41 +12,18 @@ export default function Login() {
   const [password, setPassword] = useState<string>("");
 
   const handleEmailChange = (email: string) => {
+    console.log(`Email: ${email}`);
     setEmail(email)
   };
 
   const handlePasswordChange = (password: string) => {
+    console.log(`Password: ${password}`);
     setPassword(password)
   };
 
-  const handleInputChange = () => {
-    setEmail(email);
-    setPassword(password);
-  };
-
-  const handleFormData = () => {
-    return {
-      email,
-      password
-    }
-  }
-
-  //funcao para verificar dados do usuario e enviar para o backend
   const handleLogin = () => {
-
+    
   }
-
-
-  const fields = [
-    {
-      type: "email",
-      text: "Email",
-    },
-    {
-      type: "password",
-      text: "Senha",
-    },
-  ];
 
   useEffect(() => {
     const handleResize = () => {
@@ -67,19 +45,21 @@ export default function Login() {
     <section className="h-screen w-screen flex flex-row bg-white">
       <div className="container h-full w-full px-6 py-24 flex flex-row items-center justify-center">
         <div className=''>
-          <CardForm
-            title="Login"
-            subtitle="Bem-vindo de volta!"
-            fields={fields}
-            buttonText="Login"
-            onClick={handleLogin}
-            onChangeEmail={handleEmailChange}
-            onChangePassword={handlePasswordChange}
-            data={{
-              email: email,
-              password: password,
-            }}
-          />
+          <CardForm title="Login" subtitle="Bem-vindo de volta!" onClick={handleLogin} buttonText="Login">
+            <Input 
+              data={email}
+              onChange={handleEmailChange}
+              text="Email"
+              type="email"
+            />
+            <Input
+              data={password}
+              onChange={handlePasswordChange}
+              text="Senha"
+              type="password"
+              forgotPassoword
+            />
+          </CardForm>
         </div>
       </div>
       {
