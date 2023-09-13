@@ -1,8 +1,8 @@
-"use client"
-
 import CardForm from "@/components/Card";
 import { useState } from 'react';
 import Input from "./CustomInput";
+import Model from "./Model";
+import third from "../../public/third.png"
 
 export default function ForgotPassword() {
 
@@ -18,8 +18,8 @@ export default function ForgotPassword() {
     }
 
     return (
-        <div className="container bg-white">
-            <CardForm 
+        <Model image={{url: third, alt: "teste", height: 200, width: 300}}>
+                <CardForm 
                 title="Redefinir Senha"
                 subtitle="Esqueceu sua senha?"
                 buttonText="Enviar"
@@ -29,7 +29,7 @@ export default function ForgotPassword() {
                 type="email"
                 onChange={handleSubmitEmail}
                 text="Email"/>
-            </CardForm>       
-        </div>
+            </CardForm>    
+        </Model>
     )
 }
