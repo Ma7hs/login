@@ -1,12 +1,11 @@
-import React, { ButtonHTMLAttributes, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import Input from './CustomInput';
 import Button from './Button';
 import { IconArrowNarrowRight } from '@tabler/icons-react';
 import Image from '../../node_modules/next/image';
 import logo from '../../public/logo.png';
-import { data } from '../../node_modules/autoprefixer/lib/autoprefixer';
 
-interface CardFormProps{
+interface CardFormProps {
   title: string;
   subtitle: string;
   buttonText: string;
@@ -28,10 +27,10 @@ export default function CardForm({title, subtitle, children, onClick, buttonText
       </div>
       <form className="flex flex-col items-center justify-center gap-7 w-full">
         {children}
-        <Button
+        <Button 
           text={buttonText}
           icon={<IconArrowNarrowRight />}
-          onClick={onClick}
+          onClick={onClick}          
         />
       </form>
     </div>

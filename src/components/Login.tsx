@@ -1,35 +1,40 @@
 import CardForm from "./Card";
 import mypic from "../../public/group-image.png";
-import Image from "../../node_modules/next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Input from "./CustomInput";
 import Model from "./Model";
-import axios from "axios";
-import { GetServerSideProps } from "next";
+import { performApi } from '../utils/performApi'
+import Link from "../../node_modules/next/link";
+import { useRouter } from "../../node_modules/next/router";
 
 export default function Login() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [erro, setErro] = useState<string>("");
+  const router = useRouter()
 
   const handleEmailChange = (email: string) => {
-    console.log(`Email: ${email}`);
     setEmail(email);
+    setErro("");
   };
 
   const handlePasswordChange = (password: string) => {
-    console.log(`Password: ${password}`);
     setPassword(password);
+    setErro("");
   };
 
-   const handleLogin = async () => {
-      const response = await fetch("url")
-      const data = await response.json()
-      return {
-        props: {
-          data
-        }
+  const handleLogin = async () => {
+    try {
+      const data = await performApi.sendData("auth/signin", "POST", { email, password });
+      if (data.statusCode !== 201) {
+        setErro(data.message);
+      } else {
+        localStorage.setItem("auth", data.message);
+        router.push("/")
       }
+    } catch (error) {
+      setErro("Ocorreu um erro durante o login.");
+    }
   };
 
   return (
@@ -53,9 +58,10 @@ export default function Login() {
           type="password"
           forgotPassoword
         />
+        {erro && (
+          <p className="font-black text-red-500">{erro}</p>
+        )}
       </CardForm>
     </Model>
   );
 }
-
-

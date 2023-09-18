@@ -5,11 +5,9 @@ import Model from "./Model";
 import third from "../../public/third.png"
 
 export default function ForgotPassword() {
-
     const [email, setEmail] = useState<string>("")
     
     const handleSubmitEmail = (email: string) => {
-        console.log(email)
         setEmail(email)
     }
 
@@ -18,7 +16,7 @@ export default function ForgotPassword() {
     }
 
     return (
-        <Model image={{url: third, alt: "teste", height: 200, width: 300}}>
+        <Model image={{url: third, alt: "redefinir-senha", height: 200, width: 300}}>
                 <CardForm 
                 title="Redefinir Senha"
                 subtitle="Esqueceu sua senha?"
