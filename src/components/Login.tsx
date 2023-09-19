@@ -4,7 +4,7 @@ import { useState } from "react";
 import Input from "./CustomInput";
 import Model from "./Model";
 import { performApi } from '../utils/performApi'
-import Link from "../../node_modules/next/link";
+import { setCookie } from "../../node_modules/cookies-next/lib/index";
 import { useRouter } from "../../node_modules/next/router";
 
 export default function Login() {
@@ -29,7 +29,7 @@ export default function Login() {
       if (data.statusCode !== 201) {
         setErro(data.message);
       } else {
-        localStorage.setItem("auth", data.message);
+        setCookie("auth",data.message)
         router.push("/")
       }
     } catch (error) {

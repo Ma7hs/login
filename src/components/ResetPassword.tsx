@@ -1,60 +1,51 @@
-import { useState } from "react";
-import CardForm from "./Card";
+import CardForm from "@/components/Card";
+import { useState } from 'react';
 import Input from "./CustomInput";
 import Model from "./Model";
-import second from "../../public/teste.png"
+import third from "../../public/third.png";
+import { performApi } from '../utils/performApi';
 
 export default function ResetPassword() {
-  const [password, setPassword] = useState<string>("");
-  const [confirmPassword, setConfirmPassword] = useState<string>("");
-  const [errorMessage, setErrorMessage] = useState<string>("");
+    const [email, setEmail] = useState<string>("");
+    const [info, setInfo] = useState<string>("");
+    const [erro, setErro] = useState<string>("");
 
-  const handlePassword = (password: string) => {
-    setPassword(password);
-  };
-
-  const handleConfirmPassword = (confirmPassword: string) => {
-    setConfirmPassword(confirmPassword);
-  };
-
-  const handleSubmit = () => {
-    validatePassword(password, confirmPassword);
-  };
-
-  const validatePassword = (password: string, confirmPassword: string) => {
-    if (password !== confirmPassword) {
-      setErrorMessage("As senhas não coincidem!");
-    } else if (!password || !confirmPassword) {
-      setErrorMessage("Preencha os campos necessários!");
-    } else if (password === confirmPassword) {
-      setErrorMessage("");
+    const handleSubmitEmail = (email: string) => {
+        setEmail(email);
     }
-  };
 
-  return (
-    <Model image={{url: second, alt: "teste", height: 200, width: 1000}}>
-      <CardForm
-        title="Redefinir Senha"
-        subtitle="Guarde sua nova senha!"
-        buttonText="Enviar"
-        onClick={handleSubmit}
-      >
-        <Input
-          text="Nova Senha"
-          type="password"
-          data={password}
-          onChange={handlePassword}
-        />
-        <Input
-          text="Confirmar Senha"
-          type="password"
-          data={confirmPassword}
-          onChange={handleConfirmPassword}
-        />
-        {errorMessage && (
-          <p className="font-black text-red-500">{errorMessage}</p>
-        )}
-      </CardForm>
-    </Model>
-  );
+    const sendEmail = async () => {
+        if (!email) {
+            setErro("Por favor, preencha o campo de email");
+            setInfo("")
+            return;
+        }
+
+        const data = await performApi.sendData("forgot-password", "POST", { email });
+
+        if (data.statusCode === 201) {
+            setInfo(data.message);
+        }else{
+            setErro(data.message)
+        }
+    }
+
+    return (
+        <Model image={{ url: third, alt: "redefinir-senha", height: 200, width: 300 }}>
+            <CardForm
+                title="Redefinir Senha"
+                subtitle="Esqueceu sua senha?"
+                buttonText="Enviar"
+                onClick={sendEmail}>
+                <Input
+                    data={email}
+                    type="email"
+                    onChange={handleSubmitEmail}
+                    text="Email"
+                    />
+                {info && <p className="text-zinc-800 font-medium text-sm">{info}</p>}
+                {erro && <p className="font-black text-red-500 text-sm">{erro}</p>}
+            </CardForm>
+        </Model>
+    )
 }

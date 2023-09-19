@@ -19,7 +19,7 @@ export default function CardForm({title, subtitle, children, onClick, buttonText
       <div className="flex items-center justify-center sm:mx-auto sm:w-full sm:max-w-sm">
         <Image src={logo} height={100} width={300} alt="Easy4U" />
       </div>
-      <div className="gap-5">
+      <div className="flex flex-col gap-5">
         <span className="text-sm text-zinc-400 font-normal">
           {subtitle}
         </span>
