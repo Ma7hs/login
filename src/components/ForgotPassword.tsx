@@ -9,6 +9,8 @@ import Loading from './Loading';
 import React from 'react';
 const ErrorMessage = React.lazy(() => import('./Message'));
 
+
+
 export default function ForgotPassword() {
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
@@ -16,6 +18,7 @@ export default function ForgotPassword() {
   const [info, setInfo] = useState<string>("");
   const router = useRouter();
   const { id, token } = router.query;
+  const userId = router.query.id ? +router.query.id : undefined;
 
   const handlePassword = (password: string) => {
     console.log(password);
@@ -23,6 +26,7 @@ export default function ForgotPassword() {
   };
 
   const handleConfirmPassword = (confirmPassword: string) => {
+    console.log(confirmPassword)
     setConfirmPassword(confirmPassword);
   };
 
@@ -41,18 +45,22 @@ export default function ForgotPassword() {
     try {
       console.log(confirmPassword);
       console.log(typeof confirmPassword);
-      const data = await performApi.sendData(`forgot-password/${id}/${token}`, "POST", { password });
-      setInfo("Senha alterada com sucesso!");
-      console.log(data);
+      console.log(typeof userId)  
+      const data = await performApi.sendData(`forgot-password/${userId}/${token}`, "POST", { password: confirmPassword });
+      if(data.statusCode !== 201){
+        setInfo("Senha alterada com sucesso!");
+      }else{
+        setErrorMessage("Houve um erro ao enviar para o servidor! Por favor, volte mais tarde :(")
+      }
     } catch {
       setErrorMessage("Houve um erro ao enviar para o servidor!");
     }
   };
 
   useEffect(() => {
-    console.log('ID do cliente:', id);
+    console.log('ID do cliente:', userId);
     console.log('Token:', token);
-  }, [id, token]);
+  }, [userId, token]);
 
   return (
     <Model image={{ url: second, alt: "teste", height: 200, width: 1000 }}>
