@@ -20,7 +20,7 @@ export default function ResetPassword() {
             setInfo("")
             return;
         }
-
+        
         const data = await performApi.sendData("forgot-password", "POST", { email });
 
         if (data.statusCode === 201) {
